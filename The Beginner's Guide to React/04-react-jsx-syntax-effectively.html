@@ -1,0 +1,33 @@
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <script type="text/babel">
+        const rootElement = document.getElementById("root");
+        const children = 'Hello World';
+        const className = 'container';
+        
+        // #1
+        // const element = <div className={className}>{children}</div>
+
+        // #2
+        // since "children" is just a props and its jsx
+        // we can do this instead and get rid off closing html tag
+        // const element = <div className={className} children={children} />
+
+        // #3
+        // if same props is found then only last will be used
+        // appear class will be "not-container"
+        const props = {children, className};
+        const element = <div id="app-root" {...props} className="not-container"/>
+
+        // v18
+        // import { root } from "react-dom/client";
+        // const root = createRoot(rootElement);
+        // root.render(element);
+
+        // v17 below
+        ReactDOM.render(element, rootElement);
+    </script>
+</body>
