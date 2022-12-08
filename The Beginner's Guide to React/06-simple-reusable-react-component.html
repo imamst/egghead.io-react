@@ -1,0 +1,41 @@
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <script type="text/babel">
+        const rootElement = document.getElementById("root");
+
+        // #1
+        // const message = (props) => <div className="message">{props.message}</div>
+        // const element = <div className="container">
+        //         {message({message: 'Hello World'})}
+        //         {message({message: 'Goodbye World'})}
+        //     </div>
+
+        // #2
+        // const Message = (props) => <div className="message">{props.children}</div>
+        // const element = <div className="container">
+        //         <Message>Hello World</Message>
+        //         <Message children="Goodbye World" />
+        //     </div>
+
+        // #3
+        const Message = (props) => <div className="message">{props.children}</div>
+        const element = <div className="container">
+                <Message>
+                    Hello World
+                    <Message children="Goodbye World" />
+                    <span>Hey there</span>
+                </Message>
+            </div>
+
+        // v18
+        // import { root } from "react-dom/client";
+        // const root = createRoot(rootElement);
+        // root.render(element);
+
+        // v17 below
+        ReactDOM.render(element, rootElement);
+    </script>
+</body>
