@@ -1,0 +1,41 @@
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <script type="text/babel">
+        const rootElement = document.getElementById("root");
+
+        // via createElement API
+        // const helloElement = React.createElement("span", null, "Hello");
+        // const worldElement = React.createElement("span", null, "World");
+        // const element = React.createElement(
+        //     React.Fragment,
+        //     null,
+        //     helloElement,
+        //     ' ',
+        //     worldElement
+        // );
+
+        // via JSX
+        // const element = (
+        //     <React.Fragment>
+        //         <span>Hello</span> <span>World</span>
+        //     </React.Fragment>
+        // )
+        // --- OR using short syntax ---
+        const element = (
+            <>
+                <span>Hello</span> <span>World</span>
+            </>
+        )
+
+        // v18
+        // import { root } from "react-dom/client";
+        // const root = createRoot(rootElement);
+        // root.render(element);
+
+        // v17 below
+        ReactDOM.render(element, rootElement);
+    </script>
+</body>
