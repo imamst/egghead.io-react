@@ -1,0 +1,62 @@
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <script type="text/babel">
+        const rootElement = document.getElementById("root");
+
+        function Greeting() {
+            const [name, setName] = React.useState(
+                () => {
+                    console.log('hello');
+                    return window.localStorage.getItem('name') || '';
+                }
+            );
+
+            console.log('greeting rendered');
+
+            React.useEffect(() => {
+                console.log('rendered');
+                window.localStorage.setItem('name', name);
+            }, [name]);
+            // useEffect dependency array to synchronize state of the 'world' with state of application
+            // to avoid useEffect code running every Greeting component is re-rendered
+
+            const handleChangeName = event => setName(event.target.value);
+
+            return (
+                <div>
+                    <form>
+                        <div>
+                            <label htmlFor="name">Name:</label>
+                            <input type="text" value={name} onChange={handleChangeName} id="name" />
+                            <p>{name ? <strong>Hello { name }</strong> : 'Please type your name'}</p>
+                        </div>
+                    </form>
+                </div>
+            );
+        }
+
+        function App() {
+            const [count, setCount] = React.useState(0);
+            return (
+                <>
+                    <button onClick={() => setCount(c => c + 1)}>{count}</button>
+                    <Greeting />
+                </>
+            );
+        }
+
+        // eslint-plugin-react-hooks
+        // to automatically update dependency array using eslint fix fixture
+
+        // v18
+        // import { root } from "react-dom/client";
+        // const root = createRoot(rootElement);
+        // root.render(<Greeting />);
+
+        // v17 below
+        ReactDOM.render(<App />, rootElement);
+    </script>
+</body>
