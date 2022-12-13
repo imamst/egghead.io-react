@@ -7,6 +7,15 @@
         const rootElement = document.getElementById("root");
 
         function Greeting() {
+            // PROBLEM
+            // re-render <Greeting /> component will trigger get local storage item
+            // to retrieve initial value
+            // that actually is not necessary
+
+            // SOLUTION
+            // using lazy initializer by wrapping get local storage item functionality
+            // inside function (sync)
+
             const [name, setName] = React.useState(
                 () => {
                     console.log('hello');
