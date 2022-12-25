@@ -1,0 +1,46 @@
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <script type="text/babel">
+        const rootElement = document.getElementById("root");
+
+        function UsernameForm() {
+            const [username, setUsername] = React.useState('')
+            const isLowerCase = username === username.toLowerCase()
+
+            function handleSubmit(event) {
+                event.preventDefault();
+                alert(`Hello: ${username}`)
+            }
+
+            function handleChange(event) {
+                setUsername(event.target.value.toLowerCase())
+            }
+
+            return (
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="username">Username:</label>
+                        <input 
+                            id="usernameInput" 
+                            type="text" 
+                            onChange={handleChange}
+                            value={username}
+                        />
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            )
+        }
+
+        // v18
+        // import { root } from "react-dom/client";
+        // const root = createRoot(rootElement);
+        // root.render(element);
+
+        // v17 below
+        ReactDOM.render(<UsernameForm />, rootElement);
+    </script>
+</body>
