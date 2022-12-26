@@ -1,0 +1,3 @@
+> Profiler to track commit/event in react component
+> type $0 in console to print selected dom element (inspect page)
+> type $r in console to print property of selected react component (components tab)
