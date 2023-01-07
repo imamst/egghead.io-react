@@ -1,0 +1,72 @@
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <script type="text/babel">
+        const rootElement = document.getElementById("root");
+
+        function Tilt({children}) {
+            const tiltRef = React.useRef();
+            React.useEffect(() => {
+                const tiltNode = tiltRef.current;
+                const vanillaTiltOptions = {
+                    max: 25, 
+                    speed: 400,
+                    glare: true,
+                    'max-glare': 0.5
+                };
+
+                VanillaTilt.init(tiltNode, vanillaTiltOptions);
+
+                // when uncheck/hide vanilla tilt, component is unmounted, DOM node is removed
+                // but there's still have event handlers and references to that DOM node
+                // so it's still exist in memory and can cause a memory leak
+                // so we need to garbage collected it from memory using below code
+                return () => {
+                    tiltNode.VanillaTilt.destroy();
+                }
+            }, []);
+            // add dep array to NOT running code on every component render
+            // its empty because there is no variable inside useEffect that will have changes
+
+            return (
+                <div ref={tiltRef} className="tilt-root">
+                    <div className="tilt-child">{children}</div>
+                </div>
+            );
+        }
+
+        function App() {
+            const [showTilt, setShowTilt] = React.useState(true);
+            return (
+                <div>
+                  <label>
+                      <input 
+                        type="checkbox" 
+                        checked={showTilt}
+                        onChange={e => setShowTilt(e.target.checked)} 
+                      />{' '}
+                      show tilt
+                  </label>
+                  { showTilt ? (
+                    <Tilt>
+                      <div className="totally-centered">vanilla-tilt.js</div>
+                    </Tilt>
+                  ) : null}
+                </div>
+            )
+        }
+
+        // eslint-plugin-react-hooks
+        // to automatically update dependency array using eslint fix fixture
+
+        // v18
+        // import { root } from "react-dom/client";
+        // const root = createRoot(rootElement);
+        // root.render(<Greeting />);
+
+        // v17 below
+        ReactDOM.render(<App />, rootElement);
+    </script>
+</body>
