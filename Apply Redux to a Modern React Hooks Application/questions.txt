@@ -1,0 +1,9 @@
+- What is redux?
+- What is useCallback for?
+to optimize performance by return memoized callback function
+	- memoization vs caching vs tabling
+	  https://www.freecodecamp.org/news/memoization-in-javascript-and-react/#what-is-memoization
+	  https://dev.to/abdulazizcode/scope-lexical-environment-4pdd
+	- useCallback vs useMemo?
+	  useCallback return memoized function while useMemo return memoized value
+it will only run if one of its dependencies/props updated that prevent useless re-render
