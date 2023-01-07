@@ -1,0 +1,58 @@
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <script type="text/babel">
+        const rootElement = document.getElementById("root");
+
+        const allItems = [
+            {id: 'a', value: 'apple'},
+            {id: 'o', value: 'orange'},
+            {id: 'g', value: 'grape'},
+            {id: 'p', value: 'pear'},
+        ];
+
+        function App() {
+            const [items, setItems] = React.useState(allItems)
+
+            function addItem() {
+                setItems([...items, allItems.find(i => !items.includes(i))])
+            }
+
+            function removeItem(item) {
+                setItems(items.filter(i => i !== item))
+            }
+
+            return (
+                <div>
+                    <button
+                        disabled={items.length >= allItems.length}
+                        onClick={addItem}
+                    >
+                        add item
+                    </button>
+                    <ul style={{listStyle: 'none', paddingLeft: 0}}>
+                        {
+                            items.map(item => (
+                                <li key={item.id}>
+                                    <button onClick={() => removeItem(item)}>remove</button>{' '}
+                                    <label htmlFor={`${item.value}-input`}>{item.value}</label>{' '}
+                                    <input id={`${item.value}-input`} type="text" defaultValue={item.value} />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            )
+        }
+
+        // v18
+        // import { root } from "react-dom/client";
+        // const root = createRoot(rootElement);
+        // root.render(element);
+
+        // v17 below
+        ReactDOM.render(<App />, rootElement);
+    </script>
+</body>

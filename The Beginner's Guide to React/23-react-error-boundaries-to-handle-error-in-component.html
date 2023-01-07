@@ -1,0 +1,73 @@
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/react-error-boundary@1.2.5/dist/umd/react-error-boundary.js"></script>
+    <script src="babel.js"></script>
+    <script type="text/babel">
+        const rootElement = document.getElementById("root");
+
+        // Error boundary has to be React Component
+        // class ErrorBoundary extends React.Component {
+        //     state = {error: null}
+        //     static getDerivedStateFromError(error) {
+        //         return {error}
+        //     }
+        //     render() {
+        //         const {error} = state
+        //         if (error) {
+        //             return <this.props.FallbackComponent error={error} />
+        //         }
+        //         return this.props.children
+        //     }
+        // }
+
+        const ErrorBoundary = ReactErrorBoundary.ErrorBoundary
+        // ErrorBoundary can handle error that happen in its descendant
+        // It will render something in place of all of its descendants where there is error
+        // It may be useful to place error boundary at very top level to handle all error and place specific error boundary on its descendant
+        // It will only handle error within React call stack like render method, useEffect callback
+        // Not in event hanlder, async callback like promise handler etc
+
+        function ErrorCallback({error}) {
+            return (
+                <div>
+                    <p>Something went wrong:</p>
+                    <pre>{error.message}</pre>
+                </div>
+            )
+        }
+
+        function Bomb() {
+            throw new Error('KABOOM')
+        }
+
+        function App() {
+            const [explode, setExplode] = React.useState(false)
+            return (
+                <ErrorBoundary FallbackComponent={ErrorCallback}>
+                    <div>
+                        <div>
+                            <button onClick={() => setExplode(true)} >
+                                Boom
+                            </button> 
+                        </div>
+                        <ErrorBoundary FallbackComponent={ErrorCallback}>
+                            <div>
+                                {explode ? <Bomb /> : 'Push the button Max!'}
+                            </div>
+                        </ErrorBoundary>
+                    </div>
+                </ErrorBoundary>
+            )
+        }
+
+        // v18
+        // import { root } from "react-dom/client";
+        // const root = createRoot(rootElement);
+        // root.render(element);
+
+        // v17 below
+        ReactDOM.render(<App />, rootElement);
+    </script>
+</body>
