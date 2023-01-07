@@ -6,4 +6,6 @@ to optimize performance by return memoized callback function
 	  https://dev.to/abdulazizcode/scope-lexical-environment-4pdd
 	- useCallback vs useMemo?
 	  useCallback return memoized function while useMemo return memoized value
+	- cache/memoize selectors in redux
+	  use reselect library (https://github.com/reduxjs/reselect)
 it will only run if one of its dependencies/props updated that prevent useless re-render
